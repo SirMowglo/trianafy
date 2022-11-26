@@ -1,7 +1,9 @@
-package com.salesianostriana.dam.trianafy.dto;
+package com.salesianostriana.dam.trianafy.dto.songDto;
 
 import com.salesianostriana.dam.trianafy.model.Song;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class SongDtoConverter {

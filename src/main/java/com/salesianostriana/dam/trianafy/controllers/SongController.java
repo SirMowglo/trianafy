@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.trianafy.controllers;
 
-import com.salesianostriana.dam.trianafy.dto.CreateSongDto;
-import com.salesianostriana.dam.trianafy.dto.GetSongDto;
-import com.salesianostriana.dam.trianafy.dto.SongDtoConverter;
+import com.salesianostriana.dam.trianafy.dto.songDto.CreateSongDto;
+import com.salesianostriana.dam.trianafy.dto.songDto.GetSongDto;
+import com.salesianostriana.dam.trianafy.dto.songDto.SongDtoConverter;
 import com.salesianostriana.dam.trianafy.model.Artist;
 import com.salesianostriana.dam.trianafy.model.Song;
 import com.salesianostriana.dam.trianafy.repos.ArtistRepository;
@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
