@@ -1,2 +1,35 @@
-package com.salesianostriana.dam.trianafy.dto;public class GetSongDto {
+package com.salesianostriana.dam.trianafy.dto;
+
+import com.salesianostriana.dam.trianafy.model.Song;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data @NoArgsConstructor @AllArgsConstructor
+@Builder
+public class GetSongDto {
+    private Long id;
+    private String title;
+    private String album;
+    private String year;
+    private String artist;
+
+    public static GetSongDto of (Song s){
+        String artistName;
+
+        if(s.getArtist() == null){
+            artistName = "No existe el artist";
+        }else{
+            artistName = s.getArtist().getName();
+        }
+        return GetSongDto
+                .builder()
+                .id(s.getId())
+                .title(s.getTitle())
+                .album(s.getAlbum())
+                .year(s.getYear())
+                .artist(artistName)
+                .build();
+    }
 }
