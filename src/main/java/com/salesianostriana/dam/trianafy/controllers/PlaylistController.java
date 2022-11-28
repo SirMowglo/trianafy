@@ -9,6 +9,7 @@ import com.salesianostriana.dam.trianafy.model.Song;
 import com.salesianostriana.dam.trianafy.repos.PlaylistRepository;
 import com.salesianostriana.dam.trianafy.repos.SongRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -120,7 +121,7 @@ public class PlaylistController {
                     content = @Content),
     })
     @GetMapping("/list/{id}")
-    public ResponseEntity<Playlist> getPlaylist(@PathVariable Long id){
+    public ResponseEntity<Playlist> getPlaylist(@Parameter(description = " ID de la playlist a consultar")@PathVariable Long id){
         return ResponseEntity
                 .of(repo.findById(id));
     }
@@ -147,7 +148,7 @@ public class PlaylistController {
                     content = @Content),
     })
     @PostMapping("/list/")
-    public ResponseEntity<CreatePlaylistDto> addPlaylist(@RequestBody CreatePlaylistDto dto){
+    public ResponseEntity<CreatePlaylistDto> addPlaylist(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = " Objeto Dto necesario para la creacion de la lista") @RequestBody CreatePlaylistDto dto){
         if( dto.getName()== null || dto.getDescription() == null ){
             return ResponseEntity.badRequest().build();
         }
@@ -192,7 +193,8 @@ public class PlaylistController {
 
     })
     @PutMapping("/list/{id}")
-    public ResponseEntity<GetPlaylistDto> editPlaylist(@PathVariable Long id, @RequestBody CreatePlaylistDto dto){
+    public ResponseEntity<GetPlaylistDto> editPlaylist(@Parameter(description = " ID de la playlist a editar")@PathVariable Long id,
+                                                       @io.swagger.v3.oas.annotations.parameters.RequestBody(description = " Objeto Dto necesario para edicion de la playlist") @RequestBody CreatePlaylistDto dto){
         if( dto.getName()== null || dto.getDescription() == null ){
             return ResponseEntity.badRequest().build();
         }
@@ -219,7 +221,7 @@ public class PlaylistController {
             )
     })
     @DeleteMapping("/list/{id}")
-    public ResponseEntity <?> deletePlaylist(@PathVariable Long id){
+    public ResponseEntity <?> deletePlaylist(@Parameter(description = " ID de la playlist a eliminar")@PathVariable Long id){
         if(repo.existsById(id)){
             repo.deleteById(id);
         }
@@ -271,7 +273,8 @@ public class PlaylistController {
 
     })
     @PostMapping("/list/{idList}/song/{idSong}")
-    public ResponseEntity<Playlist> addSongToPlaylist(@PathVariable("idList") Long idList, @PathVariable("idSong") Long idSong){
+    public ResponseEntity<Playlist> addSongToPlaylist(@Parameter(description = " ID de lista a consultar")@PathVariable("idList") Long idList,
+                                                      @Parameter(description = " ID de la cancion a añadir")@PathVariable("idSong") Long idSong){
         if(!repo.existsById(idList) || !songRepo.existsById(idSong)){
             return ResponseEntity.notFound().build();
         }else{
@@ -328,7 +331,7 @@ public class PlaylistController {
                     content = @Content),
     })
     @GetMapping("/list/{id}/song")
-    public ResponseEntity<Playlist> getAllSongFromPlaylist(@PathVariable Long id){
+    public ResponseEntity<Playlist> getAllSongFromPlaylist(@Parameter(description = " ID de la playlist a consultar")@PathVariable Long id){
         if(!repo.existsById(id)){
             return ResponseEntity.notFound().build();
         }
@@ -363,7 +366,8 @@ public class PlaylistController {
                     content = @Content),
     })
     @GetMapping("/list/{idList}/song/{idSong}")
-    public ResponseEntity<Song> getSongFromPlaylist(@PathVariable("idList") Long idList, @PathVariable("idSong") Long idSong){
+    public ResponseEntity<Song> getSongFromPlaylist(@Parameter(description = " ID de la playlist a consultar")@PathVariable("idList") Long idList,
+                                                    @Parameter(description = " ID de la cancion a consultar")@PathVariable("idSong") Long idSong){
         if(!repo.existsById(idList) || !songRepo.existsById(idSong)){
             return ResponseEntity.notFound().build();
         }else{
@@ -389,7 +393,8 @@ public class PlaylistController {
                     content = @Content),
     })
     @DeleteMapping("/list/{idList}/song/{idSong}")
-    public ResponseEntity<?> deleteSongFromPlaylist(@PathVariable("idList") Long idList, @PathVariable("idSong") Long idSong){
+    public ResponseEntity<?> deleteSongFromPlaylist(@Parameter(description = " ID de la playlist a consultar")@PathVariable("idList") Long idList,
+                                                    @Parameter(description = " ID de la cancion a eliminar")@PathVariable("idSong") Long idSong){
         if(!repo.existsById(idList) || !songRepo.existsById(idSong)){
             return ResponseEntity.notFound().build();
         }else{

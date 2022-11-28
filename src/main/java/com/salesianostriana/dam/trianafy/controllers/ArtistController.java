@@ -5,6 +5,7 @@ import com.salesianostriana.dam.trianafy.model.Song;
 import com.salesianostriana.dam.trianafy.repos.ArtistRepository;
 import com.salesianostriana.dam.trianafy.repos.SongRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -72,7 +73,7 @@ public class ArtistController {
                     content = @Content),
     })
     @GetMapping("/artist/{id}")
-    public ResponseEntity<Artist> getArtistById(@PathVariable Long id) {
+    public ResponseEntity<Artist> getArtistById(@Parameter(description = " ID del artista a consultar")@PathVariable Long id) {
         return ResponseEntity.of(repo.findById(id));
     }
 
@@ -94,7 +95,7 @@ public class ArtistController {
                     content = @Content),
     })
     @PostMapping("/artist/")
-    public ResponseEntity<Artist> newArtist(@RequestBody Artist a) {
+    public ResponseEntity<Artist> newArtist(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = " Objeto tipo artista necesario para su creacion") @RequestBody Artist a) {
         if(a.getName() == null){
             return ResponseEntity.badRequest().build();
         }
@@ -120,8 +121,8 @@ public class ArtistController {
                     content = @Content),
     })
     @PutMapping("/artist/{id}")
-    public ResponseEntity<Artist> editArtist(@PathVariable Long id,
-                                             @RequestBody Artist a){
+    public ResponseEntity<Artist> editArtist(@Parameter(description = " ID del artista a editar")@PathVariable Long id,
+                                             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = " Objeto tipo artista necesario para la edicion del artista") @RequestBody Artist a){
         return ResponseEntity.of(repo.findById(id)
                 .map(old ->{
                     old.setName(a.getName());
@@ -138,7 +139,7 @@ public class ArtistController {
                     )
     })
     @DeleteMapping("/artist/{id}")
-    public ResponseEntity<?> deleteArtist(@PathVariable Long id){
+    public ResponseEntity<?> deleteArtist(@Parameter(description = " ID del artista a eliminar")@PathVariable Long id){
         List<Song> songList = repoSong.findAll();
         Artist artist = repo.findById(id).orElse(null);
 

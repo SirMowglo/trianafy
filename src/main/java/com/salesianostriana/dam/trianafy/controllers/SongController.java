@@ -8,6 +8,7 @@ import com.salesianostriana.dam.trianafy.model.Song;
 import com.salesianostriana.dam.trianafy.repos.ArtistRepository;
 import com.salesianostriana.dam.trianafy.repos.SongRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -107,7 +108,7 @@ public class SongController {
                     content = @Content),
     })
     @GetMapping("/song/{id}")
-    public ResponseEntity<Song> getSong(@PathVariable Long id){
+    public ResponseEntity<Song> getSong(@Parameter(description = " ID de la cancion a consultar")@PathVariable Long id){
         return ResponseEntity
                 .of(repo.findById(id));
     }
@@ -133,7 +134,7 @@ public class SongController {
                     content = @Content),
     })
     @PostMapping("/song/")
-    public ResponseEntity<GetSongDto> addSong(@RequestBody CreateSongDto dto){
+    public ResponseEntity<GetSongDto> addSong(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = " Objeto Dto necesario para la creacion de la cancion") @RequestBody CreateSongDto dto){
         if(dto.getArtistId() ==null || dto.getTitle()== null || dto.getAlbum() == null || dto.getYear()== null){
             return ResponseEntity.badRequest().build();
         }
@@ -178,7 +179,7 @@ public class SongController {
 
     })
     @PutMapping("/song/{id}")
-    public ResponseEntity<GetSongDto> editSong(@PathVariable Long id, @RequestBody CreateSongDto dto){
+    public ResponseEntity<GetSongDto> editSong(@Parameter(description = " ID de la cancion a editar")@PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = " Objeto Dto necesario para la edicion de la cancion") @RequestBody CreateSongDto dto){
         if(dto.getArtistId() ==null || dto.getTitle()== null || dto.getAlbum() == null || dto.getYear()== null){
             return ResponseEntity.badRequest().build();
         }
@@ -209,7 +210,7 @@ public class SongController {
             )
     })
     @DeleteMapping("/song/{id}")
-    public ResponseEntity<?> deleteSong(@PathVariable Long id){
+    public ResponseEntity<?> deleteSong(@Parameter(description = " ID de la cancion a consultar")@PathVariable Long id){
         if(repo.existsById(id)) {
             repo.deleteById(id);
         }
