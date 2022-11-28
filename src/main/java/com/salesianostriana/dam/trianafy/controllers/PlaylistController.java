@@ -402,7 +402,11 @@ public class PlaylistController {
             Song s = songRepo.findById(idSong).orElse(null);
 
             if(p.getSongs().contains(s)){
-                p.deleteSong(s);
+                for(int i =0; i<p.getSongs().size();i++){
+                    if(p.getSongs().get(i) == s){
+                        p.deleteSong(p.getSongs().get(i));
+                    }
+                }
                 repo.save(p);
                 return ResponseEntity.noContent().build();
             }else{
